@@ -3,23 +3,23 @@
 #include <string.h>
 #include <unistd.h>
 
-char ** args = parse_args( char * line ){
+char ** parse_args(char * line ){
   char * input = line;
   int length = sizeof(input);
 	char ** result = malloc(5 * length);
-  int i = 0;
-
-  for (i = 0; line != NULL; i++){
-    result = strsep(&line, " ");
-  }
-  return result;
+  int x = 0;
+	while (input != NULL){
+		result[x] = strsep(&input, " ");
+		x++;
+	}
+	return result;
 }
 
 int main() {
-	char test[100] = "ls -a -l";
-	printf("Line: %s\n", test);
-	char ** separated = parse_args(test);
-	printf("Parsed, Command executed");
-	execvp(separated[0], separated);
+	char line[100] = "ls -a -l";
+	printf("Command: %s\n", line);
+	char ** completed = parse_args(line);
+	printf("Parsed and executed");
+	execvp(completed[0], completed);
 	return 0;
 }
